@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# $1 - xml url
 parse_xml() {
-  urls=`curl -s $1 | sed -n 's/^.*<loc>\(.*\)<\/loc>.*$/\1/p'`
-  xmls=(`grep -e ".xml$" <<< $urls`)
+  xml=`curl -s $1`
+  locations=$(tr '\n' ' ' <<< "$xml" | grep -oP "(?<=<loc>)(.*?)(?=</loc>)")
+  sub_xmls=(`grep -e ".xml$" <<< $locations`)
+  pages=(`grep -v -e ".xml$" <<< $locations`)
 
-  for xml_url in "${xmls[@]}"
+  printf '%s\n' "${pages[@]}" >&1
+
+  for xml_url in "${sub_xmls[@]}"
   do
     parse_xml $xml_url
   done
-
-  pages=(`grep -v -e ".xml$" <<< $urls`)
-  printf '%s\n' "${pages[@]}" >&1
 }
 
 parse_xml $1
