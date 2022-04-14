@@ -1,10 +1,20 @@
 #!/bin/bash
 
+fetch_xml() {
+  if [[ $1 == *.gz ]]
+  then
+    curl -s $1 | gunzip -c
+  else
+    curl -s $1
+  fi
+}
+
 parse_xml() {
-  xml=`curl -s $1`
+  xml=`fetch_xml $1`
+
   locations=$(tr '\n' ' ' <<< "$xml" | perl -nle'print $& while m{(?<=<loc>)(.*?)(?=</loc>)}g')
-  sub_xmls=(`grep -e ".xml$" <<< $locations`)
-  pages=(`grep -v -e ".xml$" <<< $locations`)
+  sub_xmls=(`grep -e ".xml\(.gz\)\?$" <<< $locations`)
+  pages=(`grep -v -e ".xml\(.gz\)\?$" <<< $locations`)
 
   printf '%s\n' "${pages[@]}" >&1
 
