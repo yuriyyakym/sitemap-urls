@@ -2,7 +2,7 @@
 
 parse_xml() {
   xml=`curl -s $1`
-  locations=$(tr '\n' ' ' <<< "$xml" | grep -oP "(?<=<loc>)(.*?)(?=</loc>)")
+  locations=$(tr '\n' ' ' <<< "$xml" | perl -nle'print $& while m{(?<=<loc>)(.*?)(?=</loc>)}g')
   sub_xmls=(`grep -e ".xml$" <<< $locations`)
   pages=(`grep -v -e ".xml$" <<< $locations`)
 
