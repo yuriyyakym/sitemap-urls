@@ -63,7 +63,7 @@ decode_xml_entities() {
 #
 # Output:
 #   The URLs of all pages contained within the sitemap, printed to standard output
-parse_sitemap_xml() {
+parse_sitemap() {
   local xml=$(fetch_xml $1)
 
   # Skip if fetching the XML file failed
@@ -80,8 +80,8 @@ parse_sitemap_xml() {
 
   for xml_url in "${sub_sitemaps[@]}"
   do
-    parse_sitemap_xml $xml_url
+    parse_sitemap $xml_url
   done
 }
 
-parse_sitemap_xml $1
+parse_sitemap $1
