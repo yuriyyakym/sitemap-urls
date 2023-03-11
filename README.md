@@ -1,13 +1,26 @@
-# sitemap-urls
+# sitemap-urls.sh
 
-Bash script for parsing sitemap.xml urls. It supports deep and gzipped sitemaps.
+This script is used to parse sitemap XML files from a given URL, and output a list of URLs found in the sitemap. It supports both regular and gzipped sitemaps.
 
-It prints url per line, and can be piped with other unix commands.
+## Usage
+To run the script, call it from the command line and provide the URL of the sitemap XML file as an argument:
 
-### Examples:
+```sh
+parse_sitemap_xml <sitemap_url>
+```
+
+## Output
+The script will print the list of URLs found in the sitemap to stdout, with each URL on a new line.
+
+## Dependencies
+`curl` - used to fetch the sitemap from the URL
+
+`xpath` - used to parse the sitemap XML
+
+## Examples:
 ```sh
 # Get all sitemap urls
-./sitemap-urls.sh https://developer.mozilla.org/sitemaps/en-US/sitemap.xml
+./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml
 
 # Get only urls that end with `.js`
 ./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml | grep -e "\.js$"
@@ -17,4 +30,16 @@ It prints url per line, and can be piped with other unix commands.
 
 # Get urls and write them to file
 ./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml > mdn.urls.txt
+
+# Check pages availability
+./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml | xargs -I{} sh -c '
+  if curl --output /dev/null --silent --head --fail "$1"; then
+    echo "$1 OK"
+  else
+    echo "$1 BAD"
+  fi
+' -- {}
 ```
+
+## License
+This script is licensed under the MIT License. See the LICENSE file for more information.
