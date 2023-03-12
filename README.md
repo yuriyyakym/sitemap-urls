@@ -33,10 +33,14 @@ The script will print the list of URLs found in the sitemap to stdout, with each
 
 # Check pages availability
 ./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml | xargs -I{} sh -c '
+  RED="\033[0;31m"
+  GREEN="\033[0;32m"
+  NO_COLOR="\033[0m"
+
   if curl --output /dev/null --silent --head --fail "$1"; then
-    echo "$1 OK"
+    echo "[${GREEN}OK${NO_COLOR}] $1"
   else
-    echo "$1 BAD"
+    echo "[[${RED}BAD${NO_COLOR}] $1"
   fi
 ' -- {}
 ```
