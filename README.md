@@ -40,7 +40,7 @@ The script will print the list of URLs found in the sitemap to stdout, with each
   if curl --output /dev/null --silent --head --fail "$1"; then
     echo "[${GREEN}OK${NO_COLOR}] $1"
   else
-    echo "[[${RED}BAD${NO_COLOR}] $1"
+    echo "[${RED}BAD${NO_COLOR}] $1"
   fi
 ' -- {}
 ```
