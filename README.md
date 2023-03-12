@@ -6,7 +6,7 @@ This script is used to parse sitemap XML files from a given URL, and output a li
 To run the script, call it from the command line and provide the URL of the sitemap XML file as an argument:
 
 ```sh
-parse_sitemap_xml <sitemap_url>
+./sitemap-urls.sh <sitemap_url>
 ```
 
 ## Output
