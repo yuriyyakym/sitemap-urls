@@ -17,7 +17,7 @@ The script will print the list of URLs found in the sitemap to stdout, with each
 
 `xpath` - used to parse the sitemap XML
 
-## Examples:
+## Examples
 ```sh
 # Get all sitemap urls
 ./sitemap-urls.sh https://developer.mozilla.org/sitemap.xml
