@@ -30,9 +30,9 @@ fetch_xml() {
 
   if [[ $filename == *.gz ]]
   then
-    curl -s $url | gunzip -c
+    curl -sL $url | gunzip -c
   else
-    curl -s $url
+    curl -sL $url
   fi
 }
 
